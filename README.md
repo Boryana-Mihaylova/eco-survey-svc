@@ -1,6 +1,6 @@
 ecoSurvey API
 
-ecoSurvey is an application that collects opinions and support from users on issues related to ecological topics such as reducing overconsumption. Through this platform, users can express their opinions on important issues like reducing plastic pollution, sustainable consumption, and protecting natural resources.
+ecoSurvey is a REST API that collects opinions and support from FriendlyLend API users on environmental topics such as reducing overconsumption. The API has its own database but communicates with the main FriendlyLend application to register users' opinions on key issues like plastic pollution, sustainable consumption, and the preservation of natural resources.
 
 Main functionality of the ecoSurvey API:
 
