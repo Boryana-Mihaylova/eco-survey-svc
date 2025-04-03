@@ -1,5 +1,6 @@
 package app.model.model;
 
-public enum SurveyType {
+public enum Subject {
+
     SUSTAINABILITY, ENVIRONMENT, RECYCLING;
 }

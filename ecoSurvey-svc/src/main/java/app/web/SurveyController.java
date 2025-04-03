@@ -1,8 +1,13 @@
 package app.web;
 
 import app.model.service.SurveyService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import app.web.dto.SurveyRequest;
+import app.web.dto.SurveyResponse;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/surveys")
@@ -15,4 +20,21 @@ public class SurveyController {
     }
 
 
+
+    @PostMapping
+    public ResponseEntity<SurveyResponse> submitSurvey(@RequestBody SurveyRequest surveyRequest) {
+
+        SurveyResponse response = surveyService.submitSurvey(surveyRequest);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(response);
+    }
+
+    @GetMapping("/user-survey")
+    public ResponseEntity<SurveyResponse> getSurvey(@RequestParam(name = "userId") UUID userId) {
+
+        SurveyResponse surveyResponse = surveyService.getSurvey(userId);
+        return ResponseEntity.ok(surveyResponse);
+    }
 }
