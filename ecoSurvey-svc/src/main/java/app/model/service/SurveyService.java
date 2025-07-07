@@ -10,7 +10,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
+
 @Slf4j
 @Service
 public class SurveyService {
@@ -30,19 +34,26 @@ public class SurveyService {
         Subject subjectEnum = Subject.valueOf(surveyRequest.getSubject().toUpperCase());
         Support supportEnum = Support.valueOf(surveyRequest.getSupport().toUpperCase());
 
+        Survey survey = surveyRepository.findByUserId(surveyRequest.getUserId())
+                .map(existing -> {
+                    existing.setSubject(subjectEnum);
+                    existing.setSupport(supportEnum);
+                    return existing;
+                })
+                .orElseGet(() -> Survey.builder()
+                        .userId(surveyRequest.getUserId())
+                        .subject(subjectEnum)
+                        .support(supportEnum)
+                        .build()
+                );
 
-        Survey surveyToSave = Survey.builder()
-                .subject(subjectEnum)
-                .support(supportEnum)
-                .userId(surveyRequest.getUserId())
-                .build();
-
-        Survey survey = surveyRepository.save(surveyToSave);
+        Survey saved = surveyRepository.save(survey);
 
         return new SurveyResponse(
-                survey.getUserId(),
-                survey.getSubject().toString(),
-                survey.getSupport().toString());
+                saved.getUserId(),
+                saved.getSubject().toString(),
+                saved.getSupport().toString()
+        );
     }
 
 
@@ -60,9 +71,13 @@ public class SurveyService {
                 survey.getSupport().toString());
     }
 
+    public Map<String, Long> getVoteStats() {
+        List<Object[]> results = surveyRepository.countVotesBySubject();
 
-
-//    public List<Survey> getAllSurveyRequests() {
-//        return surveyRepository.findAll();
-//    }
+        return results.stream()
+                .collect(Collectors.toMap(
+                        r -> ((Subject) r[0]).name(),
+                        r -> (Long) r[1]
+                ));
+    }
 }
