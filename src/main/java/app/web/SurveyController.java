@@ -1,8 +1,10 @@
 package app.web;
 
-import app.model.service.SurveyService;
+
+import app.service.SurveyService;
 import app.web.dto.SurveyRequest;
 import app.web.dto.SurveyResponse;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,14 +26,8 @@ public class SurveyController {
 
 
     @PostMapping
-    public ResponseEntity<SurveyResponse> submitSurvey(
-            @RequestParam("subject") String subject,
-            @RequestParam("support") String support,
-            @RequestParam("userId") UUID userId) {
-
-        SurveyRequest surveyRequest = new SurveyRequest(userId, subject, support);
-
-        log.info("Received support vote: subject={}, support={}, userId={}", subject, support, userId);
+    public ResponseEntity<SurveyResponse> submitSurvey(@Valid @RequestBody SurveyRequest surveyRequest) {
+        log.info("Received survey request: {}", surveyRequest);
         SurveyResponse response = surveyService.submitSurvey(surveyRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
