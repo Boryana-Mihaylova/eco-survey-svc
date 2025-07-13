@@ -1,4 +1,4 @@
-package app.model.model;
+package app.model;
 
 public enum Support {
     SUPPORT;

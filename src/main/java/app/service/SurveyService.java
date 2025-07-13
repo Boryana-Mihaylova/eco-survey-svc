@@ -1,9 +1,10 @@
-package app.model.service;
+package app.service;
 
-import app.model.model.Subject;
-import app.model.model.Support;
-import app.model.model.Survey;
-import app.model.repository.SurveyRepository;
+
+import app.model.Subject;
+import app.model.Support;
+import app.model.Survey;
+import app.repository.SurveyRepository;
 import app.web.dto.SurveyRequest;
 import app.web.dto.SurveyResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -74,10 +75,19 @@ public class SurveyService {
     public Map<String, Long> getVoteStats() {
         List<Object[]> results = surveyRepository.countVotesBySubject();
 
-        return results.stream()
+        return surveyRepository
+                .findAll()
+                .stream()
                 .collect(Collectors.toMap(
-                        r -> ((Subject) r[0]).name(),
-                        r -> (Long) r[1]
+                        Survey::getUserId,
+                        Survey::getSubject,
+                        (existing, replacement) -> replacement
+                ))
+                .values()
+                .stream()
+                .collect(Collectors.groupingBy(
+                        Enum::name,
+                        Collectors.counting()
                 ));
     }
 }
