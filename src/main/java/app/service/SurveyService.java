@@ -74,7 +74,7 @@ public class SurveyService {
     }
 
     public Map<String, Long> getVoteStats() {
-        List<Object[]> results = surveyRepository.countVotesBySubject();
+
 
         return surveyRepository
                 .findAll()
