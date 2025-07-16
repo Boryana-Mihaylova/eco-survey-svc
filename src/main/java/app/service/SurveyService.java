@@ -1,6 +1,7 @@
 package app.service;
 
 
+import app.exception.NotFoundException;
 import app.model.Subject;
 import app.model.Support;
 import app.model.Survey;
@@ -63,7 +64,7 @@ public class SurveyService {
         Survey survey = surveyRepository.findByUserId(userId)
                 .orElseThrow(() -> {
                     log.error("Survey not found for user: {}", userId);
-                    return new RuntimeException("Survey not found for user: " + userId);
+                    return new NotFoundException("Survey not found for user: " + userId);
                 });
 
         return new SurveyResponse(
