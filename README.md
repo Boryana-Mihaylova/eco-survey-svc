@@ -17,7 +17,7 @@ Each vote is stored in a dedicated database. The microservice is designed to be 
 
 ## 🧠 Use Case
 
-The service is integrated with the [FriendlyLend App](https://github.com/your-username/friendly-lend-app), where authenticated users can:
+The service is integrated with the [FriendlyLend App](https://github.com/Boryana-Mihaylova/friendly-lend-app), where authenticated users can:
 
 - View three available topics: **SUSTAINABILITY**, **ENVIRONMENT**, and **RECYCLING**
 - Submit their support for one topic they most strongly identify with (one vote per user)
@@ -32,10 +32,10 @@ The service is integrated with the [FriendlyLend App](https://github.com/your-us
 
 ## 🔗 Endpoints
 
-| Method | Endpoint                   | Description                        |
-|--------|----------------------------|------------------------------------|
-| `POST` | `/api/surveys/vote`        | Submit a vote (topic + user ID)   |
-| `GET`  | `/api/surveys/stats`       | Get total votes per topic         |
+| Method | Endpoint                   | Description                 |
+|--------|----------------------------|-----------------------------|
+| `POST` | `/api/surveys/user-survey` | Get a specific user's vote  |
+| `GET`  | `/api/surveys/stats`       | Get total votes per topic   |
 
 ---
 
@@ -66,29 +66,45 @@ The service is integrated with the [FriendlyLend App](https://github.com/your-us
 ```bash
 git clone https://github.com/your-username/ecoSurvey-svc.git
 cd ecoSurvey-svc
+```
 
-2. Configure your database credentials:
-Edit src/main/resources/application.properties:
-
+### 2. Configure your database credentials:
+Edit `src/main/resources/application.properties`:
+```properties
 spring.datasource.username=your_user
 spring.datasource.password=your_password
+```
 
-
-3. Run the application:
+### 3. Run the application:
+```bash
 mvn spring-boot:run
+```
 
 The service will be available at:
+```
 http://localhost:8081
+```
 
-🚀 Sample JSON Payload
+---
+
+## 🚀 Sample JSON Payload
+
+```json
 {
   "subject": "SUSTAINABILITY",
   "support": "SUPPORT",
   "userId": "f47ac10b-58cc-4372-a567-0e02b2c3d479"
 }
+```
 
-👩‍💻 Author
+---
+
+## 👩‍💻 Author
+
 Developed as part of the final project in the Spring Advanced course at SoftUni (2025), in support of the FriendlyLend application.
 
-📄 License
-This project is licensed under the MIT License – see the LICENSE file for details.
+---
+
+## 📄 License
+
+This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.
