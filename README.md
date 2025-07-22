@@ -68,12 +68,13 @@ git clone https://github.com/your-username/ecoSurvey-svc.git
 cd ecoSurvey-svc
 ```
 
-### 2. Configure your database credentials:
-Edit `src/main/resources/application.properties`:
+### 2. Create your secrets file:
+Create a new `application-secrets.properties` file inside `src/main/resources` with your database credentials:
 ```properties
-spring.datasource.username=your_user
-spring.datasource.password=your_password
+DB_USERNAME=your_user
+DB_PASSWORD=your_password
 ```
+This file is excluded from version control via `.gitignore`.
 
 ### 3. Run the application:
 ```bash
